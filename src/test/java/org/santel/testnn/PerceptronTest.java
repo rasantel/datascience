@@ -30,7 +30,8 @@ public class PerceptronTest {
                 .map(d -> createSample(d.floatValue(), PerceptronTest::functionToLearn1))
                 .collect(Collectors.toList());
 
-        Perceptron perceptron1 = new Perceptron(1, 100000);
+        Output outputNeuron = new Output(1);
+        Perceptron perceptron1 = new Perceptron(0, 1, 100000, outputNeuron);
         perceptron1.train(samples);
 
         System.out.println("**** Performance on sample inputs");
@@ -50,4 +51,31 @@ public class PerceptronTest {
                 });
     }
 
+//    @Test
+//    public void twoPerceptronsQuadraticFunction() {
+//        List<Sample> samples = Arrays.stream(new double[] {1d, 2d, 3d, 4d, 5d})
+//                .boxed()
+//                .map(d -> createSample(d.floatValue(), PerceptronTest::functionToLearn1))
+//                .collect(Collectors.toList());
+//
+//        Output outputNeuron = new Output(1);
+//        Perceptron perceptron1 = new Perceptron(0, 1, 100000, outputNeuron);
+//        perceptron1.train(samples);
+//
+//        System.out.println("**** Performance on sample inputs");
+//        Arrays.stream(new double[] {1d, 2d, 3d, 4d, 5d})
+//                .forEach(input -> {
+//                    float expected = functionToLearn1((float) input);
+//                    float actual = perceptron1.process(new float[]{(float) input});
+//                    System.out.println("Input " + input + " expected " + expected + " perceptron " + actual + " diff " + (actual - expected));
+//                });
+//
+//        System.out.println("**** Performance on other inputs");
+//        Arrays.stream(new double[] {0d, 6d, 7d, 8d, 9d, 10d})
+//                .forEach(input -> {
+//                    float expected = functionToLearn1((float) input);
+//                    float actual = perceptron1.process(new float[]{(float) input});
+//                    System.out.println("Input " + input + " expected " + expected + " perceptron " + actual + " diff " + (actual - expected));
+//                });
+//    }
 }
