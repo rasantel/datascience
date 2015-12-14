@@ -9,11 +9,13 @@ public class Perceptron {
     private static final Random RANDOM = new Random();
 
     private final float[] weights;
+    private final int trainingIterations;
     private float offset;
     private float outputWeight;
 
-	public Perceptron(int numberOfInputs) {
-		this.weights = new float[numberOfInputs];
+	public Perceptron(int numberOfInputs, int trainingIterations) {
+        this.trainingIterations = trainingIterations;
+        this.weights = new float[numberOfInputs];
         Arrays.fill(weights, 0f);
         this.offset = 0f;
         this.outputWeight = 1.0f;
@@ -23,8 +25,10 @@ public class Perceptron {
         float[] previousWeights = new float[weights.length];
         float previousOffset;
         float previousOutputWeight;
-        for (int i = 0; i < 100; ++i) {
-            float previousError = currentError(samples);
+        int lastUpdateStep = -1;
+        float previousError = currentError(samples);
+        float newError;
+        for (int step = 1; step <= trainingIterations; ++step) {
             System.arraycopy(weights, 0, previousWeights, 0, weights.length);
             previousOffset = offset;
             previousOutputWeight = outputWeight;
@@ -32,20 +36,24 @@ public class Perceptron {
             fuzz(weights); // random change
             offset = fuzz(offset);
             outputWeight = fuzz(previousOutputWeight);
-            float newError = currentError(samples);
+            newError = currentError(samples);
 
-            System.out.print("Previous weights " + Arrays.toString(previousWeights) + " offset " + previousOffset + " output weight " + previousOutputWeight + " error " + previousError
-                    + " new weights " + Arrays.toString(weights) + " offset " + offset + " output weight " + outputWeight + " error " + newError
-                    + " error diff " + (newError - previousError));
+//            System.out.print("Previous weights " + Arrays.toString(previousWeights) + " offset " + previousOffset + " output weight " + previousOutputWeight + " error " + previousError
+//                    + " new weights " + Arrays.toString(weights) + " offset " + offset + " output weight " + outputWeight + " error " + newError
+//                    + " error diff " + (newError - previousError));
             if (newError >= previousError) {
                 System.arraycopy(previousWeights, 0, weights, 0, weights.length);
                 offset = previousOffset;
                 outputWeight = previousOutputWeight;
-                System.out.println("; keeping previous weights");
+//                System.out.println("; keeping previous weights");
             } else {
-                System.out.println("; using new weights");
+                previousError = newError;
+                lastUpdateStep = step;
+//                System.out.println("; using new weights");
             }
         }
+        System.out.println("Final weights " + Arrays.toString(weights) + " offset " + offset + " output weight " + outputWeight + " error " + previousError
+                + " found in step " + lastUpdateStep + "/" + trainingIterations);
 	}
 
     private static void fuzz(float[] weights) {
