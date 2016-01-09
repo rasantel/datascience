@@ -1,8 +1,10 @@
-package org.santel.testnn;
+package org.santel.java8.testnn;
+
+import org.santel.java8.testnn.math.MathUtils;
 
 import java.util.Random;
 
-public class Neuron {
+public abstract class Neuron {
     private static final Random RANDOM = new Random();
 
     protected static float arrayProduct(float[] array1, float[] array2) {
@@ -15,16 +17,15 @@ public class Neuron {
         return product;
     }
 
-    protected static void fuzz(float[] weights) {
-        for (int i = 0; i < weights.length; ++i) {
-            weights[i] = fuzz(weights[i]);
+    protected static void fuzz(float[] values) {
+        for (int i = 0; i < values.length; ++i) {
+            values[i] = fuzz(values[i]);
         }
     }
 
     /** Multiply by random factor between -3.0f and 3.0f and add random offset between -1 and +1 */
     protected static float fuzz(float value) {
-        return value * (.1f * (30 - RANDOM.nextInt(61)))
-                + (.1f * (10 - RANDOM.nextInt(21)));
+        return value * MathUtils.nextRandomFloat(-3f, 3f) + MathUtils.nextRandomFloat(-1f, 1f);
     }
 
 }
