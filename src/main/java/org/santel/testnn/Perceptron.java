@@ -1,4 +1,4 @@
-package org.santel.java8.testnn;
+package org.santel.testnn;
 
 import java.util.Arrays;
 import java.util.Collection;

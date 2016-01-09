@@ -1,6 +1,6 @@
-package org.santel.java8.testnn;
+package org.santel.testnn;
 
-import org.santel.java8.testnn.math.MathUtils;
+import org.santel.testnn.math.MathUtils;
 
 import java.util.Random;
 

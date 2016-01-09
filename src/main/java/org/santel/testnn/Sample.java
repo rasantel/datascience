@@ -1,4 +1,4 @@
-package org.santel.java8.testnn;
+package org.santel.testnn;
 
 public class Sample {
 	private final float[] inputs;
